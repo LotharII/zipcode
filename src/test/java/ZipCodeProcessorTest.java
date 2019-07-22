@@ -7,14 +7,14 @@ import com.zipcode.service.ZipCodeService;
 import com.zipcode.service.impl.IOServiceImpl;
 import com.zipcode.service.impl.ZipCodeServiceImpl;
 import static org.junit.Assert.assertEquals;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ZipCodeProcessorTest {
 
   @Test
   public void zipCodeProcessorOutputDataTest(){
-    List<Range> list = new LinkedList<>(Utils.buildSuccessZipCodeRanges());
+    Set<Range> list = new TreeSet<>(Utils.buildSuccessZipCodeRanges());
     String expected = "[10000,10100] [10050,10150] [20000,30100]";
     ZipCodeService zipCodeService = new ZipCodeServiceImpl();
     IOService ioService = new IOServiceImpl();

@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class ZipCodeServiceTest {
@@ -20,10 +21,10 @@ public class ZipCodeServiceTest {
 
   @Test
   public void mergeZipCodeSuccessTest(){
-    List<Range> expected = new LinkedList<>();
+    Set<Range> expected = new TreeSet<>();
     expected.add(new Range(10000, 10150));
     expected.add(new Range(20000, 30100));
-    List<Range> mergedRanges = service.mergeZipCodes(Utils.buildSuccessZipCodeRanges());
+    Set<Range> mergedRanges = service.mergeZipCodes(Utils.buildSuccessZipCodeRanges());
     assertEquals(expected, mergedRanges);
   }
 

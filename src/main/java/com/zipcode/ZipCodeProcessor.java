@@ -9,6 +9,7 @@ import javax.validation.ValidationException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -20,13 +21,14 @@ public class ZipCodeProcessor {
   private IOService ioService;
   private ZipCodeService zipCodeService;
 
-  public ZipCodeProcessor(IOService ioService, ZipCodeService zipCodeService){
+  public ZipCodeProcessor(IOService ioService, ZipCodeService zipCodeService) {
     this.ioService = ioService;
     this.zipCodeService = zipCodeService;
   }
 
   /**
    * Executes the read, mergeZipCodes and write steps. Could be configured with "config.cfg" file.
+   *
    * @throws ValidationException
    */
   public void execute() throws ValidationException {
@@ -34,16 +36,16 @@ public class ZipCodeProcessor {
     try {
       prop.load(getClass().getClassLoader().getResourceAsStream(CONFIG_FILE));
       TreeSet<Range> ranges = ZipCodeParser.parseZipcodes(getInputData(prop));
-      List<Range> mergedRanges = zipCodeService.mergeZipCodes(ranges);
+      Set<Range> mergedRanges = zipCodeService.mergeZipCodes(ranges);
       writeOutputData(prop, prepareOutputData(mergedRanges));
-    } catch (IOException e){
+    } catch (IOException e) {
       System.out.println("Failed to load a config file");
     }
   }
 
-  public String prepareOutputData(List<Range> mergedRanges){
+  public String prepareOutputData(Set<Range> mergedRanges) {
     StringBuffer buffer = new StringBuffer();
-    for (Range range : mergedRanges){
+    for (Range range : mergedRanges) {
       buffer.append(range.toString());
       buffer.append(" ");
     }
